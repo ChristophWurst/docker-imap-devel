@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER antespi@gmail.com
+LABEL org.opencontainers.image.source=https://github.com/ChristophWurst/docker-imap-devel
 
 ENV MAILNAME=localdomain.test \
     MAIL_ADDRESS= \
