@@ -25,13 +25,13 @@ RUN set -x; \
     && rm -rf /var/cache/apt/archives/* /var/cache/apt/*.bin /var/lib/apt/lists/* \
     && rm -rf /usr/share/man/* && rm -rf /usr/share/doc/* \
     && touch /var/log/auth.log \
-
-    # Create mail user
+    \
+    # Create mail user \
     && adduser $MAIL_FS_USER --home $MAIL_FS_HOME --shell /bin/false --disabled-password --gecos "" \
     && chown -R ${MAIL_FS_USER}: $MAIL_FS_HOME \
     && usermod -aG $MAIL_FS_USER postfix \
     && usermod -aG $MAIL_FS_USER dovecot \
-
+    \
     && echo "Installed: OK"
 
 ADD postfix /etc/postfix
