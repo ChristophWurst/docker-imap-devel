@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 LABEL org.opencontainers.image.source=https://github.com/ChristophWurst/docker-imap-devel
 
