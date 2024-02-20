@@ -1,0 +1,16 @@
+version: '2'
+
+# Local imap and smtp server for use with Nextcloud Mail integration tests
+# Run `docker compose up -d` to start it
+services:
+  imap:
+    image: ghcr.io/christophwurst/docker-imap-devel:latest
+    ports:
+    - "25:25"
+    - "143:143"
+    - "993:993"
+    - "4190:4190"
+    environment:
+    - MAILNAME=domain.tld
+    - MAIL_ADDRESS=user@domain.tld
+    - MAIL_PASS=mypassword
