@@ -14,3 +14,7 @@ services:
     - MAILNAME=domain.tld
     - MAIL_ADDRESS=user@domain.tld
     - MAIL_PASS=mypassword
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 524288
