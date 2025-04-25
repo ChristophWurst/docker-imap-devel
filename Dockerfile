@@ -19,7 +19,6 @@ RUN set -x; \
         dovecot-imapd \
         dovecot-lmtpd \
         dovecot-managesieved \
-        rsyslog \
         iproute2 \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && rm -rf /var/cache/apt/archives/* /var/cache/apt/*.bin /var/lib/apt/lists/* \
@@ -46,4 +45,3 @@ VOLUME ["/var/mail"]
 EXPOSE 25 143 993
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
-CMD ["tail", "-fn", "0", "/var/log/mail.log"]
