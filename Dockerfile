@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.source=https://github.com/ChristophWurst/docker-imap-devel
 
@@ -19,7 +19,6 @@ RUN set -x; \
         dovecot-imapd \
         dovecot-lmtpd \
         dovecot-managesieved \
-        rsyslog \
         iproute2 \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && rm -rf /var/cache/apt/archives/* /var/cache/apt/*.bin /var/lib/apt/lists/* \
@@ -46,4 +45,3 @@ VOLUME ["/var/mail"]
 EXPOSE 25 143 993
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
-CMD ["tail", "-fn", "0", "/var/log/mail.log"]

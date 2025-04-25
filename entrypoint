@@ -2,6 +2,11 @@
 
 set -e
 
+# If there's a CMD, execute it and do nothing else.
+if [[ $# -gt 0 ]]; then
+  exec $@
+fi
+
 DEBUG_ADDRESS="debug@${MAILNAME}"
 DEBUG_PASS="debug"
 MAIL_LOCATION='/var/mail'
@@ -18,18 +23,11 @@ _add_line() {
 }
 
 _log() {
-    local logfile=/var/log/mail.log
-    if [ ! -f $logfile ]; then
-        touch $logfile
-        chown syslog:adm $logfile
-        chmod 640 $logfile
-    fi
-    echo "$(date '+%b %e %H:%I:%S') $(hostname) entrypoint[$$]: $1" >> $logfile
+    echo "$(date '+%b %e %H:%I:%S') $(hostname) entrypoint[$$]: $1"
 }
 
 _stop() {
     /etc/init.d/postfix stop
-    /etc/init.d/rsyslog stop
     if [ -f /var/run/dovecot/master.pid ]; then
         kill -15 $(cat /var/run/dovecot/master.pid)
         rm -rf /var/run/dovecot/master.pid
@@ -101,6 +99,7 @@ if [ -n "$routes" ]; then
     /usr/sbin/postconf -e inet_interfaces=all
 fi
 
+/usr/sbin/postconf -e maillog_file=/dev/stdout
 /usr/sbin/postconf -e relayhost=localhost
 /usr/sbin/postconf -e mydestination=localhost
 /usr/sbin/postconf -e virtual_maps='hash:/etc/postfix/virtual, regexp:/etc/postfix/virtual_regexp'
@@ -146,14 +145,9 @@ sed -i -e 's/^.*postmaster_address.*/  postmaster_address = '${POSTMASTER_ADDRES
 
 _log "Docker entrypoint configured"
 
-# Start syslog daemon
-/etc/init.d/rsyslog start
-
 # Start Postfix daemon
 /etc/init.d/postfix start
 
-# Start Dovecot daemon
+# Start Dovecot daemon in foreground
 rm -rf /var/run/dovecot/master.pid
-/usr/sbin/dovecot -c /etc/dovecot/dovecot.conf
-
-$@ & wait ${!}
+/usr/sbin/dovecot -F -c /etc/dovecot/dovecot.conf
