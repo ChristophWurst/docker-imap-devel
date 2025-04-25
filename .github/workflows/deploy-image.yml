@@ -12,6 +12,9 @@ name: Publish Docker image
 on:
   release:
     types: [published]
+  schedule:
+    # Rebuild images each month to ensure upstream updates get into our image.
+    - cron: "54 3 2 * *"
 
 env:
   REGISTRY: ghcr.io
