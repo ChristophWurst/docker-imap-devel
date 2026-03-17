@@ -128,6 +128,19 @@ fi
 # Create debug account
 _account_add "$DEBUG_ADDRESS" "$DEBUG_PASS"
 
+# Master password test accounts
+_account_add "carol@master.test" "carol"
+_add_line "carol@master.test" "/carol@master.test/ carol@master.test" /etc/postfix/virtual_regexp
+_account_add "charlie@master.test" "charlie"
+_add_line "charlie@master.test" "/charlie@master.test/ charlie@master.test" /etc/postfix/virtual_regexp
+
+# Static password test accounts
+_account_add "walter@static.test" "walter"
+_add_line "walter@static.test" "/walter@static.test/ walter@static.test" /etc/postfix/virtual_regexp
+_account_add "wendy@static.test" "wendy"
+_add_line "wendy@static.test" "/wendy@static.test/ wendy@static.test" /etc/postfix/virtual_regexp
+
+
 # Force to send all emails to debug email address, no email to outside
 _add_line "$DEBUG_ADDRESS" "/.+@.+/ $DEBUG_ADDRESS" /etc/postfix/virtual_regexp
 

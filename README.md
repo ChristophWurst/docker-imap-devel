@@ -37,7 +37,7 @@ docker-compose up
 Configure your email client with these parameters and test it sending 
 any email to any email address 
 
-### Catch all debug mailbox
+## Catch all debug mailbox
 
 
 - **IMAP server:** `imap`
@@ -52,7 +52,7 @@ any email to any email address
 - **SMTP authentication:** `none`
 
 
-### Normal user mailbox (Optional)
+## Normal user mailbox (Optional)
 
 
 - **IMAP server:** `imap`
@@ -65,3 +65,80 @@ any email to any email address
 - **SMTP encryption:** `No`
 - **SMTP port:** `25`
 - **SMTP authentication:** `none`
+
+
+## Master password test accounts
+
+Built-in accounts for testing Dovecot master user authentication.
+The master user separator is `*`.
+
+| Account | Password | Master user | Master password |
+|---|---|---|--|
+| `carol@master.test` | `carol` | `carol@master.test*master` | `masterpassword` |
+| `charlie@master.test` | `charlie` | `charlie@master.test*master` | `masterpassword` |
+
+Master authentication only works for `*@master.test` accounts.
+
+
+## Static password test accounts
+
+Built-in accounts for testing Dovecot static password authentication.
+All accounts share a single static password.
+
+| Account | Password | Static password |
+|---|---|---|
+| `walter@static.test` | `walter` | `staticpassword` |
+| `wendy@static.test` | `wendy` | `staticpassword` |
+
+Static authentication only works for `*@static.test` accounts.
+
+## Example configuration for Nextcloud Mail
+
+### Create matching accounts in Nextcloud
+
+```
+OC_PASS=carol occ user:add --display-name "Carol" --password-from-env carol
+occ user:setting carol settings email carol@master.test 
+
+OC_PASS=charlie occ user:add --display-name "Charlie" --password-from-env charlie
+occ user:setting charlie settings email charlie@master.test   
+
+OC_PASS=walter occ user:add --display-name "Walter" --password-from-env walter
+occ user:setting walter settings email walter@static.test 
+
+OC_PASS=wendy occ user:add --display-name "Wendy" --password-from-env wendy
+occ user:setting wendy settings email wendy@static.test  
+```
+
+### Provisioning for master password
+
+- **Provisioning domain:** `master.test`
+- **Email address template:** `%USERID%@master.test`
+- **IMAP user:** `%EMAIL%`
+- **IMAP host:** `imap`
+- **IMAP port:** `143`
+- **IMAP encryption:** `None` or `STARTTLS`
+- **SMTP user:** `%EMAIL%`
+- **SMTP host:** `imap`
+- **SMTP port:** `25`
+- **SMTP encryption:** `None` or `STARTTLS`
+- **Use master password:** Yes
+- **Master password:** `masterpassword`
+- **Master user:** `master`
+- **Master user separator:** `*`
+
+
+### Provisioning for static password
+
+- **Provisioning domain:** `static.test`
+- **Email address template:** `%USERID%@static.test`
+- **IMAP user:** `%EMAIL%`
+- **IMAP host:** `imap`
+- **IMAP port:** `143`
+- **IMAP encryption:** `None` or `STARTTLS`
+- **SMTP user:** `%EMAIL%`
+- **SMTP host:** `imap`
+- **SMTP port:** `25`
+- **SMTP encryption:** `None` or `STARTTLS`
+- **Use master password:** Yes
+- **Master password:** `staticpassword`
