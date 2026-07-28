@@ -140,6 +140,13 @@ _add_line "walter@static.test" "/walter@static.test/ walter@static.test" /etc/po
 _account_add "wendy@static.test" "wendy"
 _add_line "wendy@static.test" "/wendy@static.test/ wendy@static.test" /etc/postfix/virtual_regexp
 
+# Shared mailbox, see dovecot/95-shared.conf
+if [ ! -d "${MAIL_LOCATION}/public" ]; then
+    maildirmake.dovecot "${MAIL_LOCATION}/public"
+    maildirmake.dovecot "${MAIL_LOCATION}/public/.Team"
+    chown -R ${MAIL_FS_USER}: "${MAIL_LOCATION}/public"
+fi
+
 
 # Force to send all emails to debug email address, no email to outside
 _add_line "$DEBUG_ADDRESS" "/.+@.+/ $DEBUG_ADDRESS" /etc/postfix/virtual_regexp
