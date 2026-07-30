@@ -92,6 +92,18 @@ All accounts share a single static password.
 
 Static authentication only works for `*@static.test` accounts.
 
+
+## Shared mailbox
+
+Every account sees a shared mailbox `Shared.Team` with full read/write access.
+
+- **Namespace prefix:** `Shared.`
+- **Hierarchy separator:** `.` (must match the private maildir namespace)
+- **Mailbox:** `Shared.Team`
+
+It is not subscribed by default, and message flags (`\Seen`, …) are shared
+between all users.
+
 ## Example configuration for Nextcloud Mail
 
 ### Create matching accounts in Nextcloud
