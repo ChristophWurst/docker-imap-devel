@@ -140,6 +140,12 @@ _add_line "walter@static.test" "/walter@static.test/ walter@static.test" /etc/po
 _account_add "wendy@static.test" "wendy"
 _add_line "wendy@static.test" "/wendy@static.test/ wendy@static.test" /etc/postfix/virtual_regexp
 
+# LDAP test accounts, see https://github.com/nextcloud/nextcloud-docker-dev
+for user in amy bender fry hermes leela professor zoidberg; do
+    _account_add "${user}@planetexpress.com" "$user"
+    _add_line "${user}@planetexpress.com" "/${user}@planetexpress.com/ ${user}@planetexpress.com" /etc/postfix/virtual_regexp
+done
+
 # Shared mailbox, see dovecot/95-shared.conf
 if [ ! -d "${MAIL_LOCATION}/public" ]; then
     maildirmake.dovecot "${MAIL_LOCATION}/public"

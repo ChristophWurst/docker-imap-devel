@@ -93,6 +93,23 @@ All accounts share a single static password.
 Static authentication only works for `*@static.test` accounts.
 
 
+## LDAP test accounts
+
+Built-in accounts matching the LDAP users of [nextcloud-docker-dev](https://github.com/nextcloud/nextcloud-docker-dev).
+
+| Account | Password | Static password |
+|---|---|---|
+| `amy@planetexpress.com` | `amy` | `staticpassword` |
+| `bender@planetexpress.com` | `bender` | `staticpassword` |
+| `fry@planetexpress.com` | `fry` | `staticpassword` |
+| `hermes@planetexpress.com` | `hermes` | `staticpassword` |
+| `leela@planetexpress.com` | `leela` | `staticpassword` |
+| `professor@planetexpress.com` | `professor` | `staticpassword` |
+| `zoidberg@planetexpress.com` | `zoidberg` | `staticpassword` |
+
+Provisioning works like for `static.test`, with `planetexpress.com` as provisioning domain.
+
+
 ## Shared mailbox
 
 Every account sees a shared mailbox `Shared.Team` with full read/write access.
