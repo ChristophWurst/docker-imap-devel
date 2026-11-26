@@ -39,7 +39,9 @@ _account_add() {
     local login=$1
     local user=$(echo ${login} | cut -d @ -f1)
     local domain=$(echo ${login} | cut -d @ -f2)
-    local pass=$(doveadm pw -s SHA512-CRYPT -u $login -p $2)
+    # Plaintext so CRAM-MD5, DIGEST-MD5 and SCRAM-SHA-1 can verify it, base64 so
+    # a ':' in the password can't break the passwd-file line.
+    local pass=$(doveadm pw -s PLAIN.B64 -u $login -p $2)
 
     local uid=$(cat /etc/passwd | grep $MAIL_FS_USER | cut -d':' -f3)
     local gid=$(cat /etc/passwd | grep $MAIL_FS_USER | cut -d':' -f4)
