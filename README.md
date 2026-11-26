@@ -30,6 +30,10 @@ Edit ```docker-compose.yml``` for set these environment variables:
 - MAIL_PASS: Normal user mailbox password
 - MAIL_ACCOUNTS: A list of accounts to create `alice@domain.com,password bob@domain.com,password`
 
+IMAP accepts the PLAIN, LOGIN, DIGEST-MD5, CRAM-MD5 and SCRAM-SHA-1 mechanisms.
+The challenge-response mechanisms need the plaintext password, so account
+passwords are stored in plaintext (base64-encoded). Only use test passwords.
+
 ```
 docker-compose up
 ```
