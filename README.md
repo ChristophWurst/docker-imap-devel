@@ -34,6 +34,10 @@ Edit ```docker-compose.yml``` for set these environment variables:
 docker-compose up
 ```
 
+Failed logins are answered right away: Dovecot's `auth_failure_delay` and
+authentication penalty are disabled, so tests with wrong passwords stay fast.
+That also removes the brute-force protection, so don't expose this image.
+
 Configure your email client with these parameters and test it sending 
 any email to any email address 
 
